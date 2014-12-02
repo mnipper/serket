@@ -4,6 +4,8 @@ A gem for creating encrypted data using RSA and (by default) AES-256-CBC.
 
 The envisioned use case for this is to encrypt data before saving it to a server or mobile device using a public key, and decrypting that data only when it is sent to another server that has the private key.
 
+It works by generating a random AES key, encrypting text with that generated key, encrypting that key with RSA, and then saving the initialization vector + rsa-encrypted aes key + the aes-encrypted cipher text in either a delimited string or json.
+
 ## Installation
 
 Add this line to your application's Gemfile:
