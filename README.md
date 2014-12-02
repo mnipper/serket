@@ -102,7 +102,7 @@ class EncryptedModel < ActiveRecord::Base
 end
 ```
 
-If you instead would like to decrypt a field before saving (for example, and encrypted value that is coming from an api), then you could do so like this:
+If you instead would like to decrypt a field before saving (for example, an encrypted value that is coming from an api), then you could do so like this:
 
 ```
 class DecryptedModel < ActiveRecord::Base
