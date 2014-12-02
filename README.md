@@ -32,7 +32,7 @@ Serket.configure do |config|
 end
 ```
 
-You can then use the FieldEncrypter class to encrypt some text:
+You can then encrypt some text:
 ``
   Serket.encrypt("Hello out there!")
 ``
@@ -116,19 +116,13 @@ end
 
 This will automatically decrypt any values before saving assuming it matches your configurations.
 
-I recommend putting an initializer at config/initializers/serket.rb and putting your serket config block there.  I would also recommend having dummy keys for test/development, and using different config blocks depending on current env (test/development vs production). 
+I recommend putting an initializer at config/initializers/serket.rb and putting your serket config block there.
+
 For example:
 ```
-if Rails.env.production?
-  Serket.configure do |config|
-    config.public_key_path = "config/keys/public_key.pem"
-    config.private_key_path = "config/keys/private_key.pem"
-  end
-else
-  Serket.configure do |config|
-    config.public_key_path = "config/keys/test_public_key.pem"
-    config.private_key_path = "config/keys/test_private_key.pem"
-  end
+Serket.configure do |config|
+  config.public_key_path = ENV["SERKET_PUBLIC_KEY"]
+  config.private_key_path = ENV["SERKET_PRIVATE_KEY"]
 end
 ```
 
