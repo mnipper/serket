@@ -19,10 +19,19 @@ module Serket
   end
   
   def self.encrypt(text)
-    FieldEncrypter.new.encrypt(text)
+    field_encrypter.encrypt(text)
   end
 
   def self.decrypt(cipher)
-    FieldDecrypter.new.decrypt(cipher)
+    field_decrypter.decrypt(cipher)
   end
+
+  private
+    def self.field_encrypter
+      @field_encrypter ||= FieldEncrypter.new
+    end
+
+    def self.field_decrypter
+      @field_decrypter ||= FieldDecrypter.new
+    end
 end
