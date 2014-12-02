@@ -57,8 +57,8 @@ This expects the same format described for encryption, and is the inverse operat
 
 ```
 Serket.configure do |config|
-  config.public_key_path = "spec/resources/test_public_key.pem"
-  config.private_key_path = "spec/resources/test_private_key.pem"
+  config.public_key_path = "public_key.pem"
+  config.private_key_path = "private_key.pem"
 end
 
 encrypted = Serket::FieldEncrypter.new.encrypt("Hello out there!")
@@ -122,8 +122,8 @@ if Rails.env.production?
   end
 else
   Serket.configure do |config|
-    config.public_key_path = "spec/resources/test_public_key.pem"
-    config.private_key_path = "spec/resources/test_private_key.pem"
+    config.public_key_path = "config/keys/test_public_key.pem"
+    config.private_key_path = "config/keys/test_private_key.pem"
   end
 end
 ```
