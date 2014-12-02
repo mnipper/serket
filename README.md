@@ -69,9 +69,11 @@ puts "#{encrypted} can be decrypted to #{Serket::FieldDecrypter.new.decrypt(encr
 
 There are a few more configuration options.
 
-format: :delimited (default), :json
-symmetric_algorithm: AES-256-CBC (default)
-delimiter: '::' (default)
+| Config                   | Default       | Options                               |
+| ------------------------ |---------------| --------------------------------------|
+| format                   | :delimited    | :delimited, :json                     |
+| symmetric_algorithm      | AES-256-CBC   | Any valid cipher from OpenSSL::Cipher |
+| delimiter                | ::            | Anything not base64                   |
 
 These can all be modified in the configuration block, eg:
 
