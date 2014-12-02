@@ -34,7 +34,7 @@ end
 
 You can then use the FieldEncrypter class to encrypt some text:
 ``
-  Serket::FieldEncrypter.new.encrypt("Hello out there!")
+  Serket.encrypt("Hello out there!")
 ``
 
 By default, this will return a double-colon (::) delimited string.  The first field is the initialization vector used for the symmetric encryption algorithm (by default, this is AES-256-CBC).  The second field is the encrypted key for the symmetric algorithm.  This key is encrypted using RSA, using the provided public key.  The final field is the encrypted text ("Hello out there!" in this example).
@@ -52,7 +52,7 @@ end
 This expects the same format described for encryption, and is the inverse operation.
 
 ```
-  Serket::FieldDecrypter.new.decrypt(encrypted_from_before)
+  Serket.decrypt(Serket.encrypt('Hello out there!'))
 ```
 
 ### Quick Start
@@ -63,8 +63,8 @@ Serket.configure do |config|
   config.private_key_path = "private_key.pem"
 end
 
-encrypted = Serket::FieldEncrypter.new.encrypt("Hello out there!")
-puts "#{encrypted} can be decrypted to #{Serket::FieldDecrypter.new.decrypt(encrypted)}"
+encrypted = Serket.encrypt("Hello out there!")
+puts "#{encrypted} can be decrypted to #{Serket.decrypt(encrypted)}"
 ```
 
 ### Additional configuration

@@ -17,4 +17,12 @@ module Serket
   def self.configure
     yield(configuration)
   end
+  
+  def self.encrypt(text)
+    FieldEncrypter.new.encrypt(text)
+  end
+
+  def self.decrypt(cipher)
+    FieldDecrypter.new.decrypt(cipher)
+  end
 end
