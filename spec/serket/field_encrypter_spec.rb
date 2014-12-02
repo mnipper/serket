@@ -34,4 +34,24 @@ describe Serket::FieldEncrypter do
       @parsed_json.has_key?('message').should be_true
     end
   end
+
+  describe "encoding" do
+    it "should encrypt and decrypt an accent character" do
+      characters = %w(á é í ó ú ü ñ ¿ ¡)
+      characters.each do |c|
+        encrypted = @field_encrypter.encrypt(c)
+        decrypted = @field_decrypter.decrypt(encrypted)
+        c.should == decrypted
+      end
+    end
+
+    it "should encrypt and decrypt khmer" do
+      characters = %w(ឃ  ង ទ ម វ ស )
+      characters.each do |c|
+        encrypted = @field_encrypter.encrypt(c)
+        decrypted = @field_decrypter.decrypt(encrypted)
+        c.should == decrypted
+      end
+    end
+  end
 end

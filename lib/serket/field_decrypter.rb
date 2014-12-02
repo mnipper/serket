@@ -3,9 +3,9 @@ require 'base64'
 
 module Serket
   # Used to decrypt a field given a private key, field delimiter, symmetric
-  # algorithm, and format (:json or :delimited)
+  # algorithm, encoding, and format (:json or :delimited)
   class FieldDecrypter
-    attr_accessor :field_delimiter, :private_key_filepath, :symmetric_algorithm
+    attr_accessor :field_delimiter, :private_key_filepath, :symmetric_algorithm, :encoding
 
     def initialize(options = {})
       options ||= {}
@@ -14,6 +14,7 @@ module Serket
       @field_delimiter        = options[:field_delimiter]     || Serket.configuration.delimiter 
       @symmetric_algorithm    = options[:symmetric_algorithm] || Serket.configuration.symmetric_algorithm
       @format                 = options[:format]              || Serket.configuration.format
+      @encoding               = options[:encoding]            || Serket.configuration.encoding
     end
 
     # Decrypt the provided cipher text, and return the plaintext
@@ -23,7 +24,8 @@ module Serket
       iv, encrypted_aes_key, encrypted_text = parse(field)
       private_key = OpenSSL::PKey::RSA.new(File.read(private_key_filepath))
       decrypted_aes_key = private_key.private_decrypt(Base64.decode64(encrypted_aes_key))
-      decrypt_data(iv, decrypted_aes_key, encrypted_text)
+      decrypted_field = decrypt_data(iv, decrypted_aes_key, encrypted_text)
+      decrypted_field.force_encoding(encoding)
     end
 
     # What delimiter to use if the format is :delimited.

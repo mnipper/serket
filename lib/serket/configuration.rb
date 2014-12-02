@@ -8,14 +8,16 @@ module Serket
   #                 Must not be a character in base64.
   # * +format+ - May be :delimited or :json
   # * +symmetric_algorithm+ - May be any algorithm that may be used with OpenSSL::Cipher
+  # * +encoding+ - Any valid ruby encoding
   #
   class Configuration
-    attr_accessor :private_key_path, :public_key_path, :delimiter, :format, :symmetric_algorithm
+    attr_accessor :private_key_path, :public_key_path, :delimiter, :format, :symmetric_algorithm, :encoding
 
     def initialize
       @delimiter = "::"
       @format = :delimited
       @symmetric_algorithm = 'AES-256-CBC'
+      @encoding = 'utf-8'
     end
   end
 end

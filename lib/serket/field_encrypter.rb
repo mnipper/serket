@@ -3,17 +3,18 @@ require 'base64'
 
 module Serket
   # Used to encrypt a field given a public key, field delimiter, symmetric
-  # algorithm, and format (:json or :delimited)
+  # algorithm, encoding and format (:json or :delimited)
   class FieldEncrypter
-    attr_accessor :field_delimiter, :public_key_filepath, :symmetric_algorithm
+    attr_accessor :field_delimiter, :public_key_filepath, :symmetric_algorithm, :encoding
 
     def initialize(options = {})
       options ||= {}
 
-      @public_key_filepath   = Serket.configuration.public_key_path
+      @public_key_filepath    = Serket.configuration.public_key_path
       @field_delimiter        = options[:field_delimiter]     || Serket.configuration.delimiter 
       @symmetric_algorithm    = options[:symmetric_algorithm] || Serket.configuration.symmetric_algorithm
       @format                 = options[:format]              || Serket.configuration.format
+      @encoding               = options[:encoding]            || Serket.configuration.encoding
     end
 
     # Return encrypted string according to specified format.
@@ -23,7 +24,7 @@ module Serket
       aes = OpenSSL::Cipher.new(symmetric_algorithm)
       aes_key = aes.random_key
       iv = aes.random_iv
-      encrypt_data(iv, aes_key, field)
+      encrypt_data(iv, aes_key, field.force_encoding(encoding))
     end
 
     # Allow any field delimiter except a base64 character.

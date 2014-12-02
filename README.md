@@ -76,6 +76,7 @@ There are a few more configuration options.
 | format                   | :delimited    | :delimited, :json                     |
 | symmetric_algorithm      | AES-256-CBC   | Any valid cipher from OpenSSL::Cipher |
 | delimiter                | ::            | Anything not base64                   |
+| encoding                 | utf-8         | Any valid ruby encoding               |
 
 These can all be modified in the configuration block, eg:
 
