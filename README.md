@@ -126,6 +126,15 @@ Serket.configure do |config|
 end
 ```
 
+You can do a sanity-check with your api endpoint by sending a post request for a model with decrypted_fields:
+```
+curl -v -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"decrypted_model": {"name": "bm5gkjwdfv6QBUqFPEnOaw==::CtQJyXdbuLeVzmIOIr0h/F9yh7xvz5KWUgxe/u4IkORGOW4KjU4bw+Wzve2vV1nLYUEWJJprr8sb+grm+Ao2sngNejiHzSkJKqZA/Pclw/Ok8KgHgN7olUz4BoCSdivIDRIT9ar06sNBrqOvLd4iGUlpMkpLdSJ69K08ebSvg5tED+PcK/oI6SJoVxRoUMYdYa9AfeIS9Ld5BgvhsaJgCKr089kfH2CzwpzlmRfdxb2qgyDXnk9PG/4WUEjjbamF/R74FNBdWkTLxZeLGdMImh87CQ6AOJ/v8l1JSzpPWwEjtmhTbFEzJPuA01tP5U5D07si0esJnab/B48iACEoLg==::iSmdDgnTzkEUv0yLbtFa8Q=="}}' http://localhost:3000/api/v1/decrypted_models
+```
+
+This should automatically decrypt the name for the decrypted_model before saving if you use the provided private key located in spec/resources/test_private_key.pem (and keep the default configs for delimited with ::)
+
+**Just be sure to use your own keys in production!**
+
 ### Android Java Client
 
 You can see an example java client for use with Android in EncryptUtil.java
