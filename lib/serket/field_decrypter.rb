@@ -2,6 +2,8 @@ require 'openssl'
 require 'base64'
 
 module Serket
+  # Used to decrypt a field given a private key, field delimiter, symmetric
+  # algorithm, and format (:json or :delimited)
   class FieldDecrypter
     attr_accessor :field_delimiter, :private_key_filepath, :symmetric_algorithm
 
@@ -14,6 +16,8 @@ module Serket
       @format                 = options[:format]              || Serket.configuration.format
     end
 
+    # Decrypt the provided cipher text, and return the plaintext
+    # Return nil if whitespace
     def decrypt(field)
       return if field !~ /\S/
       iv, encrypted_aes_key, encrypted_text = parse(field)
@@ -22,6 +26,9 @@ module Serket
       decrypt_data(iv, decrypted_aes_key, encrypted_text)
     end
 
+    # What delimiter to use if the format is :delimited.
+    #
+    # Allow anything that is not base64.
     def field_delimiter=(delimiter)
       if delimiter =~ /[A-Za-z0-9\/+]/
         raise "This is not a valid delimiter!  Must not be a character in Base64."
@@ -39,6 +46,14 @@ module Serket
         aes.update(Base64.decode64(encrypted_text)) + aes.final
       end
 
+      # Extracts the initialization vector, encrypted key, and
+      # cipher text according to the specified format.
+      #
+      # delimited:
+      # * Expected format: iv::encrypted-key::ciphertext
+      #
+      # json:
+      # * Expected keys: iv, key, message
       def parse(field)
         case @format
         when :delimited
