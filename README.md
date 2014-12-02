@@ -100,6 +100,8 @@ end
 
 This will automatically decrypt any values before saving assuming it matches your configurations.
 
+You can see an example java client for use with Android in EncryptUtil.java
+
 ## Contributing
 
 1. Fork it
