@@ -112,6 +112,22 @@ end
 
 This will automatically decrypt any values before saving assuming it matches your configurations.
 
+I recommend putting an initializer at config/initializers/serket.rb and putting your serket config block there.  I would also recommend having dummy keys for test/development, and using different config blocks depending on current env (test/development vs production). 
+For example:
+```
+if Rails.env.production?
+  Serket.configure do |config|
+    config.public_key_path = "config/keys/public_key.pem"
+    config.private_key_path = "config/keys/private_key.pem"
+  end
+else
+  Serket.configure do |config|
+    config.public_key_path = "spec/resources/test_public_key.pem"
+    config.private_key_path = "spec/resources/test_private_key.pem"
+  end
+end
+```
+
 ### Android Java Client
 
 You can see an example java client for use with Android in EncryptUtil.java
