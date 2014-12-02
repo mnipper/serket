@@ -20,6 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
+### Encrypting data
+
 To encrypt data, you must first tell serket where your public key is:
 
 ```
@@ -36,6 +38,8 @@ You can then use the FieldEncrypter class to encrypt some text:
 By default, this will return a double-colon (::) delimited string.  The first field is the initialization vector used for the symmetric encryption algorithm (by default, this is AES-256-CBC).  The second field is the encrypted key for the symmetric algorithm.  This key is encrypted using RSA, using the provided public key.  The final field is the encrypted text ("Hello out there!" in this example).
 
 
+### Decrypting data
+
 To decrypt data, tell serket where to find your private key:
 ```
 Serket.configure do |config|
@@ -49,7 +53,7 @@ This expects the same format described for encryption, and is the inverse operat
   Serket::FieldDecrypter.new.decrypt(encrypted_from_before)
 ```
 
-Quick Start:
+### Quick Start
 
 ```
 Serket.configure do |config|
@@ -60,6 +64,8 @@ end
 encrypted = Serket::FieldEncrypter.new.encrypt("Hello out there!")
 puts "#{encrypted} can be decrypted to #{Serket::FieldDecrypter.new.decrypt(encrypted)}"
 ```
+
+### Additional configuration
 
 There are a few more configuration options.
 
@@ -82,6 +88,8 @@ end
 
 Note: trying to use a delimiter in the base64 character set throws an exception.  This is because the iv/encrypted key/encrypted text are encoded in base64, and so it is a bad idea to use something in base64 as a delimiter.
 
+### Use with Rails
+
 There are also some helpers if you are using rails that make encryption/decryption straight forward.  Assuming you have a model with a name field that you would like to encrypt before saving to the database, you could do so like this:
 
 ```
@@ -103,6 +111,8 @@ end
 ```
 
 This will automatically decrypt any values before saving assuming it matches your configurations.
+
+### Android Java Client
 
 You can see an example java client for use with Android in EncryptUtil.java
 
