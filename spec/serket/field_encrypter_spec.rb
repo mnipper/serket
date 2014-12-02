@@ -17,6 +17,10 @@ describe Serket::FieldEncrypter do
     end
   end
 
+  it "should return nil if the empty string is encrypted" do
+    @field_encrypter.encrypt('').should be_nil
+  end
+
   describe "json parsing" do
     before :each do
       @field_encrypter_json = Serket::FieldEncrypter.new(format: :json)

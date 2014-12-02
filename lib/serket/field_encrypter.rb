@@ -15,6 +15,7 @@ module Serket
     end
 
     def encrypt(field)
+      return if field !~ /\S/
       aes = OpenSSL::Cipher.new(symmetric_algorithm)
       aes_key = aes.random_key
       iv = aes.random_iv
